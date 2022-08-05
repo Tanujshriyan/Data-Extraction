@@ -11,14 +11,25 @@ links = excel_data_df['URL']
 URlID = excel_data_df['URLID']
 #print(links)
 
-reports = []
-for url in links:
-    r = requests.get(url)
-    data = r.text
-    soup = BeautifulSoup(data, 'html.parser')
-    reports.append(soup.get_text())
+headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/39.0.2171.95 Safari/537.36'}
 
-#print(f'Total {len(reports)} reports found')
+i = 0
+for url in links:
+        r = requests.get(url, headers=headers)
+        data = r.text
+        soup = BeautifulSoup(data, 'html.parser')
+        #print(soup)
+        for each in ['h1']:
+            s = soup.find(each)
+            #print(p)
+            f = open(f'{URlID[i]}.txt', 'w+')
+            f.write('Title: '+s.extract().text)
+            f.close() 
+        for data in soup.find_all("p"):
+            f = open(f'{URlID[i]}.txt', 'a')
+            f.write('\n'+ data.get_text())
+            f.close() 
+        i=i+1 
 
 with open('StopWords/StopWords_Generic.text','r') as f:
     stop_words = f.read()

@@ -18,11 +18,14 @@ for url in links:
         data = r.text
         soup = BeautifulSoup(data, 'html.parser')
         #print(soup)
-        for each in ['header','title','p']:
+        for each in ['h1']:
             s = soup.find(each)
             #print(p)
             f = open(f'{URlID[i]}.txt', 'w+')
-            f.write(s.extract().text)
+            f.write('Title: '+s.extract().text)
+            f.close() 
+        for data in soup.find_all("p"):
+            f = open(f'{URlID[i]}.txt', 'a')
+            f.write('\n'+ data.get_text())
             f.close() 
         i=i+1 
-        
