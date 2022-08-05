@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 
 excel_data_df =  pd.read_excel('Input.xlsx')
 links = excel_data_df['URL']
+URlID = excel_data_df['URLID']
 #print(links)
 
 reports = []
